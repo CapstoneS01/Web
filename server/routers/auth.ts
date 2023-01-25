@@ -11,7 +11,6 @@ router.post("/login", async (req, res) => {
   let user = await prisma.user.findUnique({ where: { email } });
 
   if (!user) {
-    console.log("NEW USER CREATED");
     user = await prisma.user.create({
       data: {
         email,

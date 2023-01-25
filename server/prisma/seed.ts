@@ -9,6 +9,7 @@ async function main() {
     update: {},
     create: {
       email: "alice@prisma.io",
+      expiresAt: new Date(decodeTime(randomId) + Math.random() * 1000),
     },
   });
   const bob = await prisma.user.upsert({
