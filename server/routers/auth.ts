@@ -1,10 +1,12 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import { ulid, decodeTime } from "ulid";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 const prisma = new PrismaClient();
 const port = process.env.PORT;
+const secret = process.env.JWT_SECRET as string;
 
 router.post("/login", async (req, res) => {
   const { email } = req.body;
@@ -22,6 +24,8 @@ router.post("/login", async (req, res) => {
   }
 
   const token = ulid();
+  const client_token = jwt.sign({ token }, secret);
+
   const expiresAt = new Date(decodeTime(token));
   expiresAt.setHours(expiresAt.getHours() + 1);
 
@@ -37,7 +41,7 @@ router.post("/login", async (req, res) => {
       email: "skyhunt@mcmaster.ca",
     },
     subject: "Login link",
-    htmlContent: `<a href='http://localhost:${port}/verify?token=${token}'>Click here to log in</a>`,
+    htmlContent: `<a href='http://localhost:${port}/auth/verify?token=${client_token}'>Click here to log in</a>`,
   };
 
   const fetchHeaders = new Headers({
@@ -61,27 +65,38 @@ router.post("/login", async (req, res) => {
   return res.send("success");
 });
 
-router.get('/verify/:token', async (req, res) => {
-  const { token } = req.params;
-  
-  const user = await prisma.user.findFirst({
-    where: { token },
-  });
+router.get("/verify", async (req, res) => {
+  const { token: client_token } = req.query;
 
-  if (!user) {
-    return res.status(401).send('Invalid or expired token.');
+  if (!client_token || typeof client_token !== "string") {
+    return res.status(401).send("Invalid or expired token.");
   }
 
-  if(new Date() > user.expiresAt){
-    return res.status(401).send('Token expired');
+  try {
+    const { token } = jwt.verify(client_token, secret) as { token: string };
+
+    const user = await prisma.user.findFirst({
+      where: { token },
+    });
+
+    if (!user) {
+      return res.status(401).send("Invalid token");
+    }
+
+    if (new Date() > user.expiresAt) {
+      return res.status(401).send("Token expired");
+    }
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { verified: true },
+    });
+
+    res.cookie("token", client_token, { httpOnly: true, secure: true });
+    res.send("success");
+  } catch (err) {
+    return res.status(401).send((<Error>err).message);
   }
-
-  await prisma.user.update({
-    where: { id: user.id },
-    data: { verified: true },
-  });
-
-  res.send('success');
 });
 
 export default router;
