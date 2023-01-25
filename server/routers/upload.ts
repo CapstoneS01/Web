@@ -7,8 +7,6 @@ type Limits = Options["limits"];
 
 const router = express.Router();
 
-const secret = process.env.JWT_SECRET as string;
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
