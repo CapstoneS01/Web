@@ -15,5 +15,5 @@ model User {
   email     String   @unique
   verified  Boolean  @default(false)
   token     String?
-  expiresAt DateTime?
+  expiresAt DateTime
 }
