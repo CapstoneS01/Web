@@ -1,6 +1,7 @@
 import express, { Express} from "express";
 import dotenv from "dotenv";
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 import auth from "./routers/auth";
 import upload from "./routers/upload";
@@ -12,6 +13,7 @@ const port = process.env.PORT;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors())
 
 app.use('/auth', auth);
 app.use('/upload', upload)
