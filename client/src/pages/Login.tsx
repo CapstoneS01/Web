@@ -1,11 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assests/skyhunt-logo.png";
 import { Navigate } from "react-router-dom";
 
 function Login() {
-  // const [user, setUser] = React.useState(auth.currentUser);
+  const [email, setEmail] = useState("");
+  const [isLoading, setisLoading] = useState(false);
 
-  function sendLink() {}
+  async function sendLink(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3030/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      if (!response.ok) throw new Error("Unable to log in");
+      setisLoading(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
+  }
 
   return (
     <div className="flex h-screen bg-gradient-to-r from-cyan-400 to-blue-500">
@@ -22,16 +40,19 @@ function Login() {
             className="px-3 py-3 placeholder-slate-400 text-slate-700 relative bg-white rounded text-sm border border-slate-100 shadow focus:outline-none focus:ring w-full"
             placeholder="Email"
             type="email"
+            onChange={(event) => setEmail(event.target.value)}
           />
         </div>
         <div className="flex md:w-full my-3">
           <button
             onClick={sendLink}
             type="button"
+            disabled={isLoading}
             className=" w-2/3 mx-auto mt-7 text-white font-bold bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
             <span className="font-semibold">Send Link</span>
           </button>
+          {isLoading ? "Sending..." : "Send Login Link"}
         </div>
       </div>
     </div>
