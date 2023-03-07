@@ -6,6 +6,7 @@ import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
 import Dashboard from "./pages/Dashboard";
+import { LiveFootage } from "./pages/LiveFootage";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/live",
+    element: <LiveFootage />,
   },
 ]);
 
