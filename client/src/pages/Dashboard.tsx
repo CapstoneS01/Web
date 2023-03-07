@@ -25,10 +25,11 @@ const Dashboard = () => {
     <div className="w-full">
       <Sidebar />
       <div className="ml-60 p-5">
-        <div className="flex ">
-          <div className="flex-1 text-center font-mono">
+        <div className="flex flex-col w-full">
+          <div className="flex-1 text-center font-mono w-full">
             <h1 className="text-3xl font-semibold">Dashboard</h1>
           </div>
+          
         </div>
       </div>
     </div>

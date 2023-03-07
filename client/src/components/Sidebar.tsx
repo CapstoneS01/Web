@@ -10,14 +10,14 @@ export const Sidebar = () => {
         className="fixed top-0 left-0 z-40 w-60 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gradient-to-b from-gray-800 to-gray-900">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gradient-to-b from-slate-800 to-slate-900">
           <ul className="space-y-2">
             <li className="pb-3">
               <a
-                href="#"
+                href="/dashboard"
                 className="flex text-lg font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 items-center"
               >
-                <img className="h-8 " src={droneLogo} />
+                <img className="h-8" src={droneLogo} />
                 <span className="ml-3 font-bold ">Sky Hunt</span>
               </a>
             </li>
