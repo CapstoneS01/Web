@@ -4,9 +4,9 @@ import { signOut } from "firebase/auth";
 import { Sidebar } from "../components/Sidebar";
 
 const Dashboard = () => {
-  // submit image function
-  //      <input type="file" onChange={(e) => submitImage(e!.target!.files![0])} />
   async function submitImage(file: any) {
+    // submit image function
+    //      <input type="file" onChange={(e) => submitImage(e!.target!.files![0])} />
     const data = new FormData();
     data.append("file", file);
 
@@ -22,8 +22,11 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="h-screen text-center justify-center">
+    <div className="w-full">
       <Sidebar />
+      <div className="ml-60 p-5">
+        <h1>Test</h1>
+      </div>
     </div>
   );
 };
