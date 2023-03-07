@@ -25,7 +25,11 @@ const Dashboard = () => {
     <div className="w-full">
       <Sidebar />
       <div className="ml-60 p-5">
-        <h1>Test</h1>
+        <div className="flex ">
+          <div className="flex-1 text-center font-mono">
+            <h1 className="text-3xl font-semibold">Dashboard</h1>
+          </div>
+        </div>
       </div>
     </div>
   );
