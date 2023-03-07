@@ -8,6 +8,10 @@ const prisma = new PrismaClient();
 const port = process.env.PORT;
 const secret = process.env.JWT_SECRET as string;
 
+router.get("/", (req, res) => {
+  res.send("Hello, world!");
+});
+
 router.post("/login", async (req, res) => {
   const { email } = req.body;
   let user = await prisma.user.findUnique({ where: { email } });
@@ -62,7 +66,7 @@ router.post("/login", async (req, res) => {
     return res.status(400).send((<Error>err).message);
   }
 
-  return res.send("success");
+  return res.send(client_token);
 });
 
 router.get("/verify", async (req, res) => {

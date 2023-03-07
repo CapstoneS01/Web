@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "../assests/skyhunt-logo.png";
 import { Navigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [email, setEmail] = useState("");
-  const [isLoading, setisLoading] = useState(false);
+  const [submitted, setisSubmitted] = useState(false);
 
   async function sendLink(e: { preventDefault: () => void }) {
     e.preventDefault();
@@ -17,11 +19,31 @@ function Login() {
         body: JSON.stringify({ email }),
       });
       if (!response.ok) throw new Error("Unable to log in");
-      setisLoading(true);
+      setisSubmitted(true);
+      toast.success("Click the link in your email to continue! 🚀", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
       }
+      toast.error("Woah, something went wrong ⚠️", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   }
 
@@ -43,16 +65,31 @@ function Login() {
             onChange={(event) => setEmail(event.target.value)}
           />
         </div>
-        <div className="flex md:w-full my-3">
+        <div className="flex md:w-full py-1">
           <button
             onClick={sendLink}
             type="button"
-            disabled={isLoading}
+            disabled={submitted}
             className=" w-2/3 mx-auto mt-7 text-white font-bold bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
-            <span className="font-semibold">Send Link</span>
+            {submitted ? (
+              <span className="font-semibold">Sent ✅</span>
+            ) : (
+              <span className="font-semibold">Send Link</span>
+            )}
           </button>
-          {isLoading ? "Sending..." : "Send Login Link"}
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
         </div>
       </div>
     </div>
