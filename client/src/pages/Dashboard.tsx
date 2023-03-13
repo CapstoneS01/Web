@@ -29,7 +29,6 @@ const Dashboard = () => {
           <div className="flex-1 text-center font-mono w-full">
             <h1 className="text-3xl font-semibold">Dashboard</h1>
           </div>
-          
         </div>
       </div>
     </div>
