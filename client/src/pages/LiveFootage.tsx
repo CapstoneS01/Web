@@ -1,16 +1,6 @@
 import React from "react";
 import { Sidebar } from "../components/Sidebar";
-
-const DroneInfoCard = (props: { title: string; value: string }) => {
-  return (
-    <div className="w-72 mx-4 my-2 rounded-lg shadow-lg bg-gray-800 text-white overflow-hidden">
-      <div className="px-4 py-2">
-        <h3 className="text-lg font-medium">{props.title}</h3>
-        <p className="mt-1 text-sm">{props.value}</p>
-      </div>
-    </div>
-  );
-};
+import { InfoCard } from "../components/InfoCard";
 
 export const LiveFootage = () => {
   return (
@@ -29,14 +19,14 @@ export const LiveFootage = () => {
               loop
             />
           </div>
-          <h2 className="text-2xl font-semibold mb-4">Drone Information</h2>
+          <h2 className="text-2xl font-semibold mb-4">Search Information</h2>
           <div className="flex flex-wrap justify-center">
-            <DroneInfoCard title="Drone Name" value="DJI Tello" />
-            <DroneInfoCard title="Camera Resolution" value="4K" />
-            <DroneInfoCard title="Time Elapsed" value="00:04:23" />
-            <DroneInfoCard title="Battery Level" value="54%" />
-            <DroneInfoCard title="Matches Found" value="3" />
-            <DroneInfoCard title="Encodings Loaded" value="5" />
+            <InfoCard title="Drone Name" value="DJI Tello" />
+            <InfoCard title="Camera Resolution" value="4K" />
+            <InfoCard title="Time Elapsed" value="00:04:23" />
+            <InfoCard title="Battery Level" value="54%" />
+            <InfoCard title="Matches Found" value="3" />
+            <InfoCard title="Encodings Loaded" value="5" />
           </div>
         </div>
       </div>
