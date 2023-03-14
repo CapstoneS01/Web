@@ -1,5 +1,9 @@
+// input inspired by https://bbbootstrap.com/snippets/multiple-image-upload-preview-83255717
+
 import React from "react";
 import { Sidebar } from "../components/Sidebar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const GenerateEncoding = () => {
   const [encodingName, setEncodingName] = React.useState<string>("");
@@ -28,87 +32,144 @@ export const GenerateEncoding = () => {
     setFiles(filteredFiles);
   };
 
+  const generate = async (e: any) => {
+    e.preventDefault();
+    if (files.length < 5 || files.length > 10) {
+      toast.error(
+        "You must upload a minimum of 5, and maximum of 10 images ⚠️",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+      return;
+    }
+    if (encodingName === "") {
+      toast.error("You must enter an encoding name ⚠️", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+
+      return;
+    }
+    console.log("did not work");
+    return;
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full flex">
       <Sidebar />
-      <div className="ml-60 p-5 flex justify-center items-center">
-        <div className="flex flex-col w-full ">
-          <div className="flex-1 text-center font-mono w-full">
-            <h1 className="text-3xl font-semibold">Generate Encoding</h1>
-          </div>
-          <div className="form-div w-full">
-            <form className="flex flex-col">
-              <div className="flex flex-col mt-10 w-full justify-center items-center">
-                <label htmlFor="name">Encoding Name</label>
-                <input
-                  className="px-3 py-3 placeholder-slate-400 text-slate-700 relative bg-white rounded text-sm border border-slate-100 shadow focus:outline-none focus:ring w-2/5"
-                  type="text"
-                  onChange={(e) => {
-                    setEncodingName(e.target.value);
-                  }}
-                  name="name"
-                  id="name"
-                />
-              </div>
-              <div className="flex justify-center px-3 py-5">
-                <div className="rounded-lg shadow-xl bg-gray-50 md:w-1/2">
-                  <div className="m-4">
-                    <span className="flex justify-center items-center text-[12px] mb-1 text-red-500">
-                      {message}
-                    </span>
-                    <div className="flex items-center justify-center w-full">
-                      <label className="flex cursor-pointer flex-col w-full h-32 border-2 rounded-md border-dashed hover:bg-gray-100 hover:border-gray-300">
-                        <div className="flex flex-col items-center justify-center pt-7">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-12 h-12 text-gray-400 group-hover:text-gray-600"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <p className="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                            Select a photo
-                          </p>
-                        </div>
-                        <input
-                          type="file"
-                          onChange={handleFile}
-                          className="opacity-0"
-                          multiple={true}
-                          name="files[]"
+      <div className="flex-1 ml-60 p-5 flex flex-col justify-center items-center">
+        <div className="w-full">
+          <h1 className="text-3xl font-semibold text-center mb-10">
+            Generate Encoding
+          </h1>
+          <form className="flex flex-col justify-center items-center">
+            <div className="w-full flex flex-col justify-center items-center mb-10">
+              <label htmlFor="name" className="text-left mb-2">
+                Encoding Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Enter encoding name"
+                className="w-2/5 px-3 py-3 placeholder-slate-400 text-slate-700 bg-white rounded text-sm border border-slate-100 shadow focus:outline-none focus:ring"
+                onChange={(e) => setEncodingName(e.target.value)}
+              />
+            </div>
+            <div className="w-full flex justify-center mb-10">
+              <div className="rounded-lg shadow-xl bg-gray-50 w-full md:w-1/2">
+                <div className="m-4">
+                  <span className="flex justify-center items-center text-[12px] mb-1 text-red-500">
+                    {message}
+                  </span>
+                  <div className="flex items-center justify-center w-full">
+                    <label
+                      htmlFor="image"
+                      className="flex flex-col w-full h-32 border-2 rounded-md border-dashed hover:bg-gray-100 hover:border-gray-300 cursor-pointer"
+                    >
+                      <div className="flex flex-col items-center justify-center pt-7">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className="w-12 h-12 text-gray-400 group-hover:text-gray-600"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <p className="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+                          Select a photo
+                        </p>
+                      </div>
+                      <input
+                        type="file"
+                        id="image"
+                        name="files[]"
+                        className="opacity-0"
+                        multiple={true}
+                        onChange={handleFile}
+                      />
+                    </label>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {files.map((file, key) => (
+                      <div key={key} className="overflow-hidden relative">
+                        <img
+                          className="h-20 w-20 rounded-md"
+                          src={URL.createObjectURL(file)}
+                          alt="Selected Image"
                         />
-                      </label>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {files.map((file, key) => {
-                        return (
-                          <div key={key} className="overflow-hidden relative">
-                            <i
-                              onClick={() => {
-                                removeImage(file.name);
-                              }}
-                              className="mdi mdi-close absolute right-1 hover:text-white cursor-pointer"
-                            ></i>
-                            <img
-                              className="h-20 w-20 rounded-md"
-                              src={URL.createObjectURL(file)}
-                            />
-                          </div>
-                        );
-                      })}
-                    </div>
+                        <i
+                          className="absolute right-1 hover:text-white cursor-pointer"
+                          onClick={() => removeImage(file.name)}
+                        ></i>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+            <div className="w-full flex justify-center mb-10">
+              <button
+                type="button"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded"
+                onClick={generate}
+              >
+                Generate
+              </button>
+            </div>
+          </form>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 };
