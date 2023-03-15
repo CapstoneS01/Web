@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/CapstoneS01/Web#readme",
   "dependencies": {
+    "@knocklabs/node": "^0.4.17",
     "@prisma/client": "^4.9.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

@@ -1,7 +1,7 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
+import { KnockFeedProvider } from "@knocklabs/react-notification-feed";
 import { Sidebar } from "../components/Sidebar";
+import Notification from "../components/Notification";
 
 const Dashboard = () => {
   async function submitImage(file: any) {
@@ -22,16 +22,25 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="w-full">
-      <Sidebar />
-      <div className="ml-60 p-5">
-        <div className="flex flex-col w-full">
-          <div className="flex-1 text-center font-mono w-full">
-            <h1 className="text-3xl font-semibold">Dashboard</h1>
+    <>
+      <KnockFeedProvider
+        apiKey={import.meta.env.VITE_KNOCK_PUBLIC_KEY}
+        feedId={import.meta.env.VITE_KNOCK_CHANNEL_ID}
+        userId={"aboodeh890@gmail.com"}
+      >
+        <Notification />
+      </KnockFeedProvider>
+      <div className="w-full">
+        <Sidebar />
+        <div className="ml-60 p-5">
+          <div className="flex flex-col w-full">
+            <div className="flex-1 text-center font-mono w-full">
+              <h1 className="text-3xl font-semibold">Dashboard</h1>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
