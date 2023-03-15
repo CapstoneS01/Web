@@ -96,6 +96,7 @@ router.get("/verify", async (req, res) => {
       data: { verified: true },
     });
 
+    req.user = user.email;
     res.cookie("token", client_token, { httpOnly: true, secure: true });
     res.send("success");
   } catch (err) {
