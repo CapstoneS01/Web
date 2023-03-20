@@ -62,9 +62,9 @@ export const SearchVideo = () => {
       <div className="flex-1 ml-60 p-5 flex flex-col justify-center items-center">
         <div className="w-full">
           <h1 className="text-3xl font-semibold text-center mb-10">
-            Generate Encoding
+            Search Video
           </h1>
-          <form className="flex flex-col justify-center items-center">
+          <form className="flex flex-col justify-center items-center ">
             <div className="w-1/2 flex flex-col justify-center items-center mb-10 mt-10">
               <label
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -73,9 +73,10 @@ export const SearchVideo = () => {
                 Encoding File
               </label>
               <input
-                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                className="block w-full text-md text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 id="large_size"
                 type="file"
+                onChange={(e) => setEncodingFile(e.target!.files![0])}
               />
             </div>
             <div className="w-1/2 flex flex-col justify-center items-center mb-10">
@@ -86,9 +87,10 @@ export const SearchVideo = () => {
                 Video File
               </label>
               <input
-                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                className="block w-full text-md text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 id="large_size"
                 type="file"
+                onChange={(e) => setVideoFile(e.target!.files![0])}
               />
             </div>
             <div className="w-full flex justify-center mb-10">
@@ -97,7 +99,7 @@ export const SearchVideo = () => {
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded"
                 onClick={(e) => searchVideo(e)}
               >
-                Generate
+                Perform Search
               </button>
             </div>
           </form>

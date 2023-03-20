@@ -26,12 +26,7 @@ export const GenerateEncoding = () => {
     setMessage("");
     setFiles(filesArr);
   };
-
-  const removeImage = (name: string) => {
-    const filteredFiles = files.filter((file) => file.name !== name);
-    setFiles(filteredFiles);
-  };
-
+  
   async function submitImages(e: any) {
     e.preventDefault();
     if (files.length < 5 || files.length > 10) {
