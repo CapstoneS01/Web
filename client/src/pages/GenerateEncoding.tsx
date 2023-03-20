@@ -32,11 +32,6 @@ export const GenerateEncoding = () => {
     setFiles(filteredFiles);
   };
 
-  const generate = async (e: any) => {
-    console.log("did not work");
-    return;
-  };
-
   async function submitImages(e: any) {
     e.preventDefault();
     if (files.length < 5 || files.length > 10) {
@@ -97,9 +92,6 @@ export const GenerateEncoding = () => {
           </h1>
           <form className="flex flex-col justify-center items-center">
             <div className="w-full flex flex-col justify-center items-center mb-10 mt-10">
-              <label htmlFor="name" className="text-left mb-2">
-                Encoding Name
-              </label>
               <input
                 type="text"
                 name="name"

@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 import { LiveFootage } from "./pages/LiveFootage";
 import { GenerateEncoding } from "./pages/GenerateEncoding";
+import { SearchVideo } from "./pages/SearchVideo";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/generate-encoding",
     element: <GenerateEncoding />,
+  },
+  {
+    path: "/search-video",
+    element: <SearchVideo />,
   },
 ]);
 
