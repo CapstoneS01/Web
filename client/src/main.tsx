@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
-import Dashboard from "./pages/Dashboard";
 import { LiveFootage } from "./pages/LiveFootage";
 import { GenerateEncoding } from "./pages/GenerateEncoding";
+import { SearchVideo } from "./pages/SearchVideo";
 
 const router = createBrowserRouter([
   {
@@ -23,16 +23,16 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/dashboard",
-    element: <Dashboard />,
-  },
-  {
     path: "/live",
     element: <LiveFootage />,
   },
   {
     path: "/generate-encoding",
     element: <GenerateEncoding />,
+  },
+  {
+    path: "/search-video",
+    element: <SearchVideo />,
   },
 ]);
 
