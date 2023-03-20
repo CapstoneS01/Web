@@ -33,6 +33,11 @@ export const GenerateEncoding = () => {
   };
 
   const generate = async (e: any) => {
+    console.log("did not work");
+    return;
+  };
+
+  async function submitImages(e: any) {
     e.preventDefault();
     if (files.length < 5 || files.length > 10) {
       toast.error(
@@ -64,9 +69,23 @@ export const GenerateEncoding = () => {
 
       return;
     }
-    console.log("did not work");
-    return;
-  };
+
+    const data = new FormData();
+    data.append("name", encodingName);
+    for (let i = 0; i < files.length; i++) {
+      data.append("files", files[i]);
+    }
+
+    await fetch("http://localhost:3030/upload", {
+      credentials: "same-origin",
+      method: "POST",
+      body: data,
+      headers: {
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjAxR1FTWkMwMFJYSDdXTUJUMlhIWENTMEdaIiwiaWF0IjoxNjc0ODM1MjYzfQ.yneN_EBmUNPFK9zsPuXQHlZTn-FWRkERXBC0hd6-Bi8",
+      },
+    });
+  }
 
   return (
     <div className="w-full flex">
@@ -77,7 +96,7 @@ export const GenerateEncoding = () => {
             Generate Encoding
           </h1>
           <form className="flex flex-col justify-center items-center">
-            <div className="w-full flex flex-col justify-center items-center mb-10">
+            <div className="w-full flex flex-col justify-center items-center mb-10 mt-10">
               <label htmlFor="name" className="text-left mb-2">
                 Encoding Name
               </label>
@@ -99,7 +118,7 @@ export const GenerateEncoding = () => {
                   <div className="flex items-center justify-center w-full">
                     <label
                       htmlFor="image"
-                      className="flex flex-col w-full h-32 border-2 rounded-md border-dashed hover:bg-gray-100 hover:border-gray-300 cursor-pointer"
+                      className="flex items-center justify-center p-40 flex-col w-full h-32 border-2 rounded-md border-dashed hover:bg-gray-100 hover:border-gray-300 cursor-pointer"
                     >
                       <div className="flex flex-col items-center justify-center pt-7">
                         <svg
@@ -136,10 +155,6 @@ export const GenerateEncoding = () => {
                           src={URL.createObjectURL(file)}
                           alt="Selected Image"
                         />
-                        <i
-                          className="absolute right-1 hover:text-white cursor-pointer"
-                          onClick={() => removeImage(file.name)}
-                        ></i>
                       </div>
                     ))}
                   </div>
@@ -150,7 +165,7 @@ export const GenerateEncoding = () => {
               <button
                 type="button"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded"
-                onClick={generate}
+                onClick={(e) => submitImages(e)}
               >
                 Generate
               </button>

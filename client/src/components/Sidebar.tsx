@@ -14,11 +14,37 @@ export const Sidebar = () => {
           <ul className="space-y-2">
             <li className="pb-3">
               <a
-                href="/dashboard"
+                href="/live"
                 className="flex text-lg font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 items-center"
               >
                 <img className="h-8" src={droneLogo} />
                 <span className="ml-3 font-bold ">Sky Hunt</span>
+              </a>
+            </li>
+            <li className="">
+              <a
+                href="/live"
+                className="flex items-center p-2 text-xs font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <svg
+                  width="24px"
+                  height="24px"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 12v4.4a.6.6 0 01-.6.6H3.6a.6.6 0 01-.6-.6V7.6a.6.6 0 01.6-.6h10.8a.6.6 0 01.6.6V12zm0 0l5.016-4.18a.6.6 0 01.984.461v7.438a.6.6 0 01-.984.46L15 12z"
+                    stroke="#f3f6f4"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>
+                </svg>
+                <span className="flex-1 ml-3 whitespace-nowrap">
+                  Live Footage
+                </span>
               </a>
             </li>
             <li>
@@ -53,33 +79,6 @@ export const Sidebar = () => {
                 </span>
               </a>
             </li>
-            <li className="">
-              <a
-                href="/live"
-                className="flex items-center p-2 text-xs font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <svg
-                  width="24px"
-                  height="24px"
-                  strokeWidth="1.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M15 12v4.4a.6.6 0 01-.6.6H3.6a.6.6 0 01-.6-.6V7.6a.6.6 0 01.6-.6h10.8a.6.6 0 01.6.6V12zm0 0l5.016-4.18a.6.6 0 01.984.461v7.438a.6.6 0 01-.984.46L15 12z"
-                    stroke="#f3f6f4"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                </svg>
-                <span className="flex-1 ml-3 whitespace-nowrap">
-                  Live Footage
-                </span>
-              </a>
-            </li>
-
             <li>
               <a
                 href="#"
