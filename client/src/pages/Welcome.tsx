@@ -40,7 +40,7 @@ function Welcome() {
       </Link>
       <div className="mt-20">
         <iframe
-          src="https://www.youtube.com/embed/E7wJTI-1dvQ"
+          src="https://www.youtube.com/watch?v=9bZkp7q19f0"
           allow="autoplay; encrypted-media"
           title="video"
           width={640}

@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
-import Dashboard from "./pages/Dashboard";
 import { LiveFootage } from "./pages/LiveFootage";
 import { GenerateEncoding } from "./pages/GenerateEncoding";
 
@@ -23,10 +22,6 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/dashboard",
-    element: <Dashboard />,
-  },
-  {
     path: "/live",
     element: <LiveFootage />,
   },
@@ -35,6 +30,7 @@ const router = createBrowserRouter([
     element: <GenerateEncoding />,
   },
 ]);
+
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
