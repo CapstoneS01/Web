@@ -36,12 +36,16 @@ router.post("/", isAuthenticated, async (req, res) => {
     if (err) {
       return res.status(500).send(err.message);
     }
-    const child = spawn('python', ['../../ObjectDetection/face_recognition/recognition/encode_faces.py']);
-    child.stdout.on('data', (data) => {
+    const child = spawn("python", [
+      "../../ObjectDetection/face_recognition/recognition/encode_faces.py",
+    ]);
+    child.stdout.on("data", (data) => {
       console.log(`stdout:\n${data}`);
     });
 
-    res.send("Files uploaded and encoding generated");
+    child.on("close", () => {
+      res.send("Files uploaded and encoding generated");
+    });
   });
 });
 
