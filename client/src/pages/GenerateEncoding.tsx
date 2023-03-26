@@ -2,13 +2,25 @@
 
 import React from "react";
 import { Sidebar } from "../components/Sidebar";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+const toastOptions: ToastOptions = {
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "dark",
+};
 
 export const GenerateEncoding = () => {
   const [encodingName, setEncodingName] = React.useState<string>("");
   const [files, setFiles] = React.useState<File[]>([]);
   const [message, setMessage] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   const handleFile = (e: any) => {
     const files = e.target.files;
@@ -26,55 +38,54 @@ export const GenerateEncoding = () => {
     setMessage("");
     setFiles(filesArr);
   };
-  
-  async function submitImages(e: any) {
+
+  async function generate(e: any) {
     e.preventDefault();
+
     if (files.length < 5 || files.length > 10) {
       toast.error(
         "You must upload a minimum of 5, and maximum of 10 images ⚠️",
-        {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        }
+        toastOptions
       );
       return;
     }
     if (encodingName === "") {
-      toast.error("You must enter an encoding name ⚠️", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("You must enter an encoding name ⚠️", toastOptions);
 
       return;
     }
 
-    const data = new FormData();
-    data.append("name", encodingName);
-    for (let i = 0; i < files.length; i++) {
-      data.append("files", files[i]);
-    }
+    const formData = new FormData();
 
-    await fetch("http://localhost:3030/upload", {
-      credentials: "same-origin",
-      method: "POST",
-      body: data,
-      headers: {
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjAxR1FTWkMwMFJYSDdXTUJUMlhIWENTMEdaIiwiaWF0IjoxNjc0ODM1MjYzfQ.yneN_EBmUNPFK9zsPuXQHlZTn-FWRkERXBC0hd6-Bi8",
-      },
+    files.map((file, idx) => {
+      const fileExtension = file.name.split(".").pop();
+      const formattedFile = new File(
+        [file],
+        `${encodingName}_${idx + 1}.${fileExtension}`,
+        { type: file.type }
+      );
+      formData.append("images", formattedFile);
     });
+
+    setLoading(true);
+    const response = await fetch("http://localhost:3333/upload", {
+      credentials: "include",
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      toast.error(
+        "Something went wrong, please try again later ⚠️",
+        toastOptions
+      );
+      setLoading(false);
+    } else {
+      toast.success("Encoding generated successfully ✅", toastOptions);
+      setFiles([]);
+      e.target.reset();
+      setLoading(false);
+    }
   }
 
   return (
@@ -85,8 +96,14 @@ export const GenerateEncoding = () => {
           <h1 className="text-3xl font-semibold text-center mb-10">
             Generate Encoding
           </h1>
-          <form className="flex flex-col justify-center items-center">
-            <div className="w-full flex flex-col justify-center items-center mb-10 mt-10">
+          <form
+            className="flex flex-col justify-center items-center"
+            onSubmit={generate}
+          >
+            <div className="w-full flex flex-col justify-center items-center mb-10">
+              <label htmlFor="name" className="text-left mb-2">
+                Encoding Name
+              </label>
               <input
                 type="text"
                 name="name"
@@ -148,15 +165,36 @@ export const GenerateEncoding = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full flex justify-center mb-10">
-              <button
-                type="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded"
-                onClick={(e) => submitImages(e)}
-              >
-                Generate
-              </button>
-            </div>
+            <button
+              disabled={loading}
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded justify-center items-center flex"
+            >
+              {loading ? (
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8z"
+                  ></path>
+                </svg>
+              ) : (
+                "Generate"
+              )}
+            </button>
           </form>
         </div>
       </div>

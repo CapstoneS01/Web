@@ -3,3 +3,5 @@ dist
 .env
 dev.db*
 uploads
+.DS_Store
+
