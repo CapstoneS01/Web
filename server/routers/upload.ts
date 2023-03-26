@@ -10,7 +10,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../../ObjectDetection/face_recognition/recognition/dataset");
+    cb(null, "./dataset");
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
@@ -36,13 +36,16 @@ router.post("/", isAuthenticated, async (req, res) => {
     if (err) {
       return res.status(500).send(err.message);
     }
-    const child = spawn("python", [
-      "../../ObjectDetection/face_recognition/recognition/encode_faces.py",
+    const child = spawn("python3", [
+      "../../ObjectDetection/face_recognition/encode_faces.py",
     ]);
+    child.stderr.pipe(process.stderr);
     child.stdout.on("data", (data) => {
       console.log(`stdout:\n${data}`);
     });
-
+    child.stderr.on("error", (data) => {
+      console.log(`error:\n${data}`);
+    });
     child.on("close", () => {
       res.send("Files uploaded and encoding generated");
     });

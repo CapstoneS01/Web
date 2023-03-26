@@ -20,6 +20,7 @@ export const GenerateEncoding = () => {
   const [encodingName, setEncodingName] = React.useState<string>("");
   const [files, setFiles] = React.useState<File[]>([]);
   const [message, setMessage] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   const handleFile = (e: any) => {
     const files = e.target.files;
@@ -66,6 +67,7 @@ export const GenerateEncoding = () => {
       formData.append("images", formattedFile);
     });
 
+    setLoading(true);
     const response = await fetch("http://localhost:3333/upload", {
       credentials: "include",
       method: "POST",
@@ -77,10 +79,12 @@ export const GenerateEncoding = () => {
         "Something went wrong, please try again later ⚠️",
         toastOptions
       );
+      setLoading(false);
     } else {
       toast.success("Encoding generated successfully ✅", toastOptions);
       setFiles([]);
       e.target.reset();
+      setLoading(false);
     }
   }
 
@@ -162,10 +166,34 @@ export const GenerateEncoding = () => {
               </div>
             </div>
             <button
+              disabled={loading}
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded justify-center items-center flex"
             >
-              Generate
+              {loading ? (
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8z"
+                  ></path>
+                </svg>
+              ) : (
+                "Generate"
+              )}
             </button>
           </form>
         </div>
