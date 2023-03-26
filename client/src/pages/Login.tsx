@@ -11,7 +11,7 @@ function Login() {
   async function sendLink(e: { preventDefault: () => void }) {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3030/auth/login", {
+      const response = await fetch("http://localhost:3333/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +70,7 @@ function Login() {
             onClick={sendLink}
             type="button"
             disabled={submitted}
-            className=" w-2/3 mx-auto mt-7 text-white font-bold bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className=" w-2/3 mx-auto mt-7 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
             {submitted ? (
               <span className="font-semibold">Sent ✅</span>
