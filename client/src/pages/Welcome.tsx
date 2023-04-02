@@ -38,9 +38,9 @@ function Welcome() {
       >
         Get Started
       </Link>
-      <div className="mt-20">
+      <div className="mt-20 pb-14">
         <iframe
-          src="https://www.youtube.com/embed/E7wJTI-1dvQ"
+          src="https://youtu.be/jSdw9nCCPIk"
           allow="autoplay; encrypted-media"
           title="video"
           width={640}
